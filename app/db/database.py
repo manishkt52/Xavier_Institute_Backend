@@ -1,17 +1,53 @@
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, declarative_base
+from sqlalchemy.orm import (
+    declarative_base,
+    sessionmaker,
+)
 
-DATABASE_URL = "sqlite:///./test.db"
+from dotenv import load_dotenv
+import os
 
-engine = create_engine(DATABASE_URL, connect_args={"check_same_thread": False})
 
-SessionLocal = sessionmaker(bind=engine, autoflush=False, autocommit=False)
+# load env variables
+load_dotenv()
 
+
+# Neon PostgreSQL URL
+DATABASE_URL = os.getenv(
+    "DATABASE_URL"
+)
+
+if not DATABASE_URL:
+    raise ValueError(
+        "DATABASE_URL is missing"
+    )
+
+
+# create connection
+engine = create_engine(
+    DATABASE_URL,
+    pool_pre_ping=True,
+)
+
+
+# DB session
+SessionLocal = sessionmaker(
+    autocommit=False,
+    autoflush=False,
+    bind=engine,
+)
+
+
+# Base model
 Base = declarative_base()
 
+
+# dependency
 def get_db():
     db = SessionLocal()
+
     try:
         yield db
+
     finally:
         db.close()
