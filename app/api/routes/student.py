@@ -50,37 +50,4 @@ def student_login(data: TokenRequest):
         }
 
     except ValueError:
-        raise HTTPException(status_code=401, detail="Invalid Google token")
-    
-
-# Student Manual Login-in
-# @router.post("/student-login-id")
-# def student_login_id(
-#     data: LoginRequest,
-#     response: Response
-# ):
-
-#     if data.user_id not in STUDENTS:
-#         raise HTTPException(
-#             status_code=401,
-#             detail="Invalid student ID"
-#         )
-
-#     if STUDENTS[data.user_id] != data.password:
-#         raise HTTPException(
-#             status_code=401,
-#             detail="Wrong password"
-#         )
-
-#     response.set_cookie(
-#         key="student_auth",
-#         value=data.user_id,
-#         httponly=True,
-#         samesite="lax"
-#     )
-
-#     return {
-#         "status": "success",
-#         "role": "student",
-#         "user_id": data.user_id
-#     }    
+        raise HTTPException(status_code=401, detail="Invalid Google token")  
