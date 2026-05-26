@@ -47,7 +47,8 @@ def google_auth(data: TokenData, response: Response, db: Session = Depends(get_d
     httponly=True,
     max_age=120,  # 2 minutes
     secure=True,  # True in production (HTTPS)
-    samesite="none"
+    samesite="none",
+    path="/",
     )
 
     return {
@@ -107,6 +108,7 @@ def student_login_id(
         max_age=120,
         secure=True,
         samesite="none",
+        path="/",
     )
 
     return {
@@ -158,7 +160,8 @@ def logout(response: Response):
         key="access_token",
         httponly=True,
         secure=True,
-        samesite="none"
+        samesite="none",
+        path="/",
     )
 
     return {
